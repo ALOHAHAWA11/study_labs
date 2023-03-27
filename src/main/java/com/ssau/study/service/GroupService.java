@@ -49,11 +49,13 @@ public class GroupService implements IGroupService {
         } else {
             Group modifying = groupRepository.findById(groupPojo.getId()).get();
             modifying.setName(groupPojo.getName());
-            List<Student> students = new ArrayList<>();
-            for (StudentPojo pojoStudent : groupPojo.getStudents()) {
-                students.add(StudentPojo.toEntity(pojoStudent));
+            if (groupPojo.getStudents() != null) {
+                List<Student> students = new ArrayList<>();
+                for (StudentPojo pojoStudent : groupPojo.getStudents()) {
+                    students.add(StudentPojo.toEntity(pojoStudent));
+                }
+                modifying.setStudents(students);
             }
-            modifying.setStudents(students);
             return GroupPojo.fromEntity(groupRepository.save(modifying));
         }
     }
