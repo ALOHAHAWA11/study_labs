@@ -5,6 +5,7 @@ import com.ssau.study.entity.Group;
 import com.ssau.study.entity.Student;
 import com.ssau.study.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class GroupController {
     }
 
     @GetMapping
-    public List<Group> getGroups() {
+    public List<GroupPojo> getGroups() {
         return groupService.getGroups();
     }
 
@@ -44,7 +45,5 @@ public class GroupController {
     public long deleteGroup(@PathVariable long id) {
         return groupService.deleteGroup(id);
     }
-
-
 
 }

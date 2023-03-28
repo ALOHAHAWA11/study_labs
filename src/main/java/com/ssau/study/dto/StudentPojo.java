@@ -13,7 +13,7 @@ public class StudentPojo {
     private String name;
     private Date birthdate;
     private int number;
-    private long groupId;
+    private Long groupId;
 
     public static StudentPojo fromEntity(Student student) {
         StudentPojo studentPojo = new StudentPojo();
@@ -21,17 +21,18 @@ public class StudentPojo {
         studentPojo.setName(student.getName());
         studentPojo.setBirthdate(student.getBirthdate());
         studentPojo.setNumber(student.getNumber());
-        studentPojo.setGroupId(student.getGroup().getId());
+        if (student.getGroup() != null) {
+            studentPojo.setGroupId(student.getGroup().getId());
+        }
         return studentPojo;
     }
 
     public static Student toEntity(StudentPojo studentPojo) {
         Student student = new Student();
-        student.setId(student.getId());
+        student.setId(studentPojo.getId());
         student.setName(studentPojo.getName());
         student.setNumber(studentPojo.getNumber());
         student.setBirthdate(studentPojo.getBirthdate());
-        student.setGroup(student.getGroup());
         return student;
     }
 }

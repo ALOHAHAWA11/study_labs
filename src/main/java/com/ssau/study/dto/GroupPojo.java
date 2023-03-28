@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 public class GroupPojo {
-    private long id;
+    private Long id;
     private String name;
     private List<StudentPojo> students;
 
@@ -19,11 +19,14 @@ public class GroupPojo {
         GroupPojo groupPojo = new GroupPojo();
         groupPojo.setId(group.getId());
         groupPojo.setName(group.getName());
-        List<StudentPojo> students = new ArrayList<>();
-        for (Student student : group.getStudents()){
-            students.add(StudentPojo.fromEntity(student));
+        if (group.getStudents() != null) {
+            List<StudentPojo> students = new ArrayList<>();
+            for (Student student : group.getStudents()) {
+                students.add(StudentPojo.fromEntity(student));
+            }
+            groupPojo.setStudents(students);
         }
-        groupPojo.setStudents(students);
+
         return groupPojo;
     }
 
@@ -31,11 +34,13 @@ public class GroupPojo {
         Group group = new Group();
         group.setId(groupPojo.getId());
         group.setName(groupPojo.getName());
-        List<Student> students = new ArrayList<>();
-        for (StudentPojo studentPojo : groupPojo.getStudents()) {
-            students.add(StudentPojo.toEntity(studentPojo));
+        if (groupPojo.getStudents() != null) {
+            List<Student> students = new ArrayList<>();
+            for (StudentPojo studentPojo : groupPojo.getStudents()) {
+                students.add(StudentPojo.toEntity(studentPojo));
+            }
+            group.setStudents(students);
         }
-        group.setStudents(students);
         return group;
     }
 }

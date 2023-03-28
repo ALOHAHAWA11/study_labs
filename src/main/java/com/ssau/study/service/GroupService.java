@@ -24,8 +24,8 @@ public class GroupService implements IGroupService {
     }
 
     @Override
-    public List<Group> getGroups() {
-        return groupRepository.findAll();
+    public List<GroupPojo> getGroups() {
+        return groupRepository.findAll().stream().map(GroupPojo::fromEntity).toList();
     }
 
     @Override

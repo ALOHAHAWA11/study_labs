@@ -24,8 +24,8 @@ public class StudentService implements IStudentService {
     }
 
     @Override
-    public List<Student> getStudents() {
-        return studentRepository.findAll();
+    public List<StudentPojo> getStudents() {
+        return studentRepository.findAll().stream().map(StudentPojo::fromEntity).toList();
     }
 
     @Override

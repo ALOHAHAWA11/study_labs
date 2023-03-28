@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IGroupService {
-    List<Group> getGroups();
+    List<GroupPojo> getGroups();
 
     GroupPojo saveGroup(GroupPojo groupPojo);
 

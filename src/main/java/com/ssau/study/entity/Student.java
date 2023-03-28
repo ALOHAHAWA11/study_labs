@@ -13,7 +13,7 @@ import java.util.Date;
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String name;
     @Temporal(value = TemporalType.DATE)
     private Date birthdate;
