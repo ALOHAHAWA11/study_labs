@@ -23,21 +23,21 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class WebSecurityConfig {
 
-    private final UserDetailsServiceIml userDetailsServiceIml;
-
-    @Autowired
-    public WebSecurityConfig(UserDetailsServiceIml userDetailsServiceIml) {
-        this.userDetailsServiceIml = userDetailsServiceIml;
-    }
+//    private final UserDetailsServiceIml userDetailsServiceIml;
+//
+//    @Autowired
+//    public WebSecurityConfig(UserDetailsServiceIml userDetailsServiceIml) {
+//        this.userDetailsServiceIml = userDetailsServiceIml;
+//    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests()
-                        .requestMatchers(HttpMethod.GET, "/api/groups").hasAuthority(Permission.READ.getPermission())
-                        .requestMatchers(HttpMethod.DELETE, "/api/groups").hasAuthority(Permission.WRITE.getPermission())
-                        .requestMatchers(HttpMethod.POST, "/api/groups").hasAuthority(Permission.WRITE.getPermission())
-                        .requestMatchers(HttpMethod.PUT, "/api/groups").hasAuthority(Permission.WRITE.getPermission())
+                        .requestMatchers(HttpMethod.GET, "/api/groups").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/groups").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/groups").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/groups").hasRole("ADMIN")
                         .requestMatchers("/api/students/**").permitAll()
                         .anyRequest().authenticated()
                 .and()
@@ -59,23 +59,23 @@ public class WebSecurityConfig {
     public UserDetailsService userDetailsService() {
         UserDetails user =
                 User.withUsername("user")
-                        .password(passwordEncoder().encode("password"))
-                        .authorities(Role.ADMIN.getAuthorities())
+                        .password(passwordEncoder().encode("111"))
+                        .roles("USER")
                         .build();
         UserDetails admin =
                 User.withUsername("admin")
-                        .password(passwordEncoder().encode("password"))
-                        .authorities(Role.USER.getAuthorities())
+                        .password(passwordEncoder().encode("111"))
+                        .roles("ADMIN")
                         .build();
         return new InMemoryUserDetailsManager(user, admin);
     }
-    @Bean
-    public DaoAuthenticationProvider daoAuthenticationProvider() {
-        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-        daoAuthenticationProvider.setUserDetailsService(userDetailsServiceIml);
-        return daoAuthenticationProvider;
-    }
+//    @Bean
+//    public DaoAuthenticationProvider daoAuthenticationProvider() {
+//        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+//        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+//        daoAuthenticationProvider.setUserDetailsService(userDetailsServiceIml);
+//        return daoAuthenticationProvider;
+//    }
 
 //    @Bean
 //    public  configure(AuthenticationManagerBuilder authenticationManagerBuilder) {
